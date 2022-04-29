@@ -1,0 +1,12 @@
+{
+    "id": "{B7C81853-85F7-7160-53AD-6687D68895D4}",
+    "name": "Chanify",
+    "type": 3,
+    "vendor": "",
+    "aliases": [],
+    "parentRequirements": [],
+    "childRequirements": [],
+    "implemented": [],
+    "prefix": "CHANIFY",
+    "url": "https://github.com/Netti93/IPSymconChanify/blob/main/Chanify/README.md"
+}
