@@ -29,18 +29,23 @@ declare(strict_types=1);
             return rtrim($this->ReadPropertyString('URL'), '/').'/v1/sender/'.$this->ReadPropertyString('ApplicationToken');
         }
 
-        public function SendTestMessage()
+        public function SendMessage(string $message, string $title = NULL)
         {
-            return $this->SendMessage($this->Translate('This is a test message from your Symcon instance'), $this->Translate('Test message'));
+            return $this->SendMessageEx($message, $title);
         }
 
-        public function SendMessage(string $message, string $title = null, string $copy = null, integer $autocopy = null, integer $sound = null, integer $priority = null, string $interruptionlevel = null)
+        public function SendTestMessage()
+        {
+            return $this->SendMessageEx($this->Translate('This is a test message from your Symcon instance'));
+        }
+
+        public function SendMessageEx(string $message, string $title = NULL, string $copy = NULL, int $autocopy = NULL, int $sound = NULL, int $priority = NULL, string $interruptionlevel = NULL)
         {
             $data = [
                 'text' => $message
             ];
-            is_null($title) ?: $data['title'] = $title;
-            is_null($copy) ?: $data['copy'] = $copy;
+            empty($title) ?: $data['title'] = $title;
+            empty($copy) ?: $data['copy'] = $copy;
             ($autocopy !== 0 && $autocopy !== 1) ?: $data['autocopy'] = $autocopy;
             ($sound !== 0 && $sound !== 1) ?: $data['sound'] = $sound;
             ($priority !== 5 && $priority !== 10) ?: $data['priority'] = $priority;
@@ -70,13 +75,13 @@ declare(strict_types=1);
             curl_close($ch);
 
             $responseObject = json_decode($response);
-            if (property_exists($responseObject, 'appid')) {
+            if (property_exists($responseObject, 'request-uid')) {
                 $this->SetStatus(102);
 
                 return true;
-            } elseif (property_exists($responseObject, 'errorCode') && $responseObject->{'errorCode'} == 404) {
+            } elseif (property_exists($responseObject, 'res') && $responseObject->{'res'} == 404) {
                 $this->SetStatus(202);
-            } elseif (property_exists($responseObject, 'errorCode') && $responseObject->{'errorCode'} == 401) {
+            } elseif (property_exists($responseObject, 'res') && $responseObject->{'res'} == 401) {
                 $this->SetStatus(203);
             }
 

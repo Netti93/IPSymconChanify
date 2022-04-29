@@ -7,7 +7,6 @@
             "An error occurred - please check the log": "Es ist ein Fehler aufgetreten - bitte Statusprotokoll prüfen",
             "URL invalid": "URL fehlerhaft",
             "Token invalid": "Token ungültig",
-            "Test message": "Testnachricht",
             "This is a test message from your Symcon instance": "Dies ist eine Testnachricht von Symcon"
         }
     }
